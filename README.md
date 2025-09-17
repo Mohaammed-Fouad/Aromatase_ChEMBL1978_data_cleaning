@@ -1,63 +1,64 @@
-# Aromatase Inhibitor Bioactivity Data
+# Anticancer Activity Prediction
 
-This repository contains a Python script that uses the **ChEMBL** database to retrieve, clean, and classify bioactivity data for **aromatase inhibitors**. The final output is a clean CSV file containing key information about the molecules and their activity.
+This project is a machine learning notebook that demonstrates how to predict the anticancer activity of chemical compounds using data from the ChEMBL database. The notebook walks through the entire process, from data retrieval and preprocessing to model building and prediction, using standard Python libraries.
 
-### How It Works
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Notebook Breakdown](#notebook-breakdown)
+- [Acknowledgements](#acknowledgements)
 
-The script automates a multi-step process for data retrieval and preparation:
+---
 
-1.  **Target Query:** It searches the ChEMBL database for the target protein "Aromatase" and selects the relevant ChEMBL ID.
-2.  **Bioactivity Retrieval:** It retrieves all bioactivity data, specifically **IC50** values, associated with the selected aromatase target.
-3.  **Data Cleaning:** The raw data is cleaned by removing entries without an IC50 value and filtering for only **nanomolar (nM)** units to ensure consistency.
-4.  **Activity Classification:** The molecules are classified into three categories based on their IC50 value:
-      * **Active:** $\< 1000 \\text{ nM}$
-      * **Intermediate:** $1000 - 10,000 \\text{ nM}$
-      * **Inactive:** $\> 10,000 \\text{ nM}$
-5.  **Final Dataset Creation:** A final dataset is created with key columns—molecule ChEMBL ID, canonical SMILES, IC50 value, and the new activity classification—and saved to a CSV file.
+### Project Overview
 
------
+The goal of this project is to build a machine learning model that can predict the pIC50 (a measure of compound potency) for various chemical compounds based on their molecular properties. The data is sourced directly from the ChEMBL API, specifically targeting compounds with anticancer activity against a particular target (CHEMBL355).
 
-### Getting Started
+The key steps covered in the notebook include:
+- **Data Acquisition:** Fetching bioactivity data directly from the ChEMBL database.
+- **Data Preprocessing:** Cleaning and preparing the data by handling missing values and standardizing compound identifiers.
+- **Feature Engineering:** Calculating molecular descriptors (features) that are used as input for the machine learning model.
+- **Model Training:** Training a random forest model to predict pIC50 values.
+- **Prediction:** Using the trained model to predict the anticancer activity of a new compound.
 
-#### Prerequisites
+---
 
-To run this script, you'll need the `pandas` library and the `chembl_webresource_client`.
+### Installation
 
-You can install them using pip:
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/Mohaammed-Fouad/Activity_prediction_against_aromatase_ChEMBL1978.git
+    cd Activity_prediction_against_aromatase_ChEMBL1978
+    ```
+2.  **Install the required libraries:**
+    The project relies on the following Python libraries. It's recommended to create a virtual environment first.
+    
+    ```bash
+    pip install pandas chembl_webresource_client scikit-learn
+    ```
 
-```bash
-pip install pandas chembl_webresource_client
-```
+---
 
-#### Running the Script
+### Usage
 
-1.  Save the code as a Python file (e.g., `get_aromatase_data.py`).
-2.  Run the script from your terminal:
+To run the notebook and replicate the analysis:
 
-<!-- end list -->
+1.  Open the `anticancer_activity_prediction.ipynb` file in a Jupyter environment (e.g., Jupyter Notebook, JupyterLab, or Google Colab).
+2.  Execute the cells in sequential order.
 
-```bash
-python get_aromatase_data.py
-```
+---
 
-After execution, a file named `anticancer_activity_data.csv` will be saved in the same directory.
+### Notebook Breakdown
 
-### Output
+* **Installing the Data:** Installs the `chembl_webresource_client` library to interact with the ChEMBL database.
+* **Searching and Retrieving Data:** Fetches bioactivity data for the specified target.
+* **Data Preparation:** Cleans the retrieved data, removes missing values, and prepares it for analysis.
+* **Feature Calculation:** Computes molecular descriptors needed for the model.
+* **Model Training and Prediction:** Trains a RandomForestRegressor and demonstrates how to make predictions on a new compound.
 
-The final `anticancer_activity_data.csv` file will have the following columns:
+---
 
-  * **ChEMBL:** The unique identifier for the molecule in the ChEMBL database.
-  * **SMILES:** The canonical SMILES string representing the molecule's structure.
-  * **IC50 nM:** The IC50 value in nanomolars.
-  * **activity:** The bioactivity class (`active`, `intermediate`, or `inactive`).
+### Acknowledgements
 
-### Example Output
-
-```
-   ChEMBL                       SMILES  IC50 nM      activity
-0  CHEMBL108605  O=C(O)c1ccc(c(Cl)c1)C#N   1.0000  intermediate
-1  CHEMBL135606  CC(C)CC(NC(C)C)C(=O)O    3.4000        active
-2  CHEMBL37409   Cc1cc(C)c2ccccc2c1       5.6000        active
-3  CHEMBL136976  C[C@@H](C)CC(=O)O        8.5000        active
-4  CHEMBL59317   C[C@H](O)C(=O)c1ccccc1   10.0000        active
-```
+This code was created with the assistance of AI and was heavily inspired by online tutorials. Special thanks to the YouTube channels "Data Professor" and "Omixium" and their creators, Dr. Chanin Nantasenamat (`@dataprofessor` on GitHub) and Dr. Pritam Cumar (`@pritampanda15` on GitHub), for providing comprehensive and insightful tutorials on this topic.
